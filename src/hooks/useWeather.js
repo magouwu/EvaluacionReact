@@ -2,18 +2,21 @@ import { useState } from "react";
 export default function useWeather() {
   const url = "https://api.datos.gob.mx/v1/condiciones-atmosfericas";
   const [weather, setWeather] = useState([]);
-  const getWeather = async () => {
-    try {
-      let response = await fetch(url, {
-        method: "GET",
+
+  //fetch al endpoint https://api.datos.gob.mx/v1/condiciones-atmosfericas
+  const getWeather = () => {
+
+      return fetch(url)
+      .then(response => response.json())
+      .then((data) => {
+     setWeather(data)
+      })
+      .catch((error) => {
+       console.error('Error:', error);  
       });
-      const data = await response.json();
-      setWeather(data);
-    } catch (err) {
-      console.error("error del fetch", err);
     }
-  };
-  
+
+  // busqueda por nombre
   const searchByName = async (query) =>{
     weather.results.map((results)=>results.name===query)
 

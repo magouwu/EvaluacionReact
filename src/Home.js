@@ -1,10 +1,14 @@
-import React from 'react'
-import Table from './Components/Table'
-function Home() {       
-  return (<>
-    <div><Table/></div>
-    </>
-  )
+import React from "react";
+import Elements from "./Components/Elements";
+
+function Home() {
+
+
+  return (
+    <div>
+      <Elements />
+    </div>
+  );
 }
 
-export default Home
+export default Home;
