@@ -17,6 +17,12 @@ function Elements() {
       setPage(current=>current+1)
       setMove(0)//reinicia el valor de los elementos mostrados al llegar a 100
     }
+    if(move===-10){
+      console.log('antes',move)
+      setPage(current=>current-1)
+      setMove(90)
+      console.log('despues',move)
+    }
 
     //funcion para imprimir de 10 en 10 elementos
      const weatherToShow = weather?.results?.slice(move, move + 10).map((results) => (
