@@ -2,18 +2,24 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import useWeather from "../hooks/useWeather";
 function Elements() {
-    const { getWeather, weather } = useWeather();
-    useEffect(() => {
-      getWeather()
-    }, []);
-    const [page, setPage] = useState(0);
+    const { getWeather, weather,setPage } = useWeather();
+
+    const [move, setMove] = useState(0);
     // const [query, setQuery] = useState(null);
     console.log(weather);
     // const handleQuery = (event) =>{
     //   event.preventDefault()
+    //   searchByName(query)
     // }
+
+    //condicional para cambiar de pagina en caso de que llegue a los 100 elementos
+    if(move===100){
+      setPage(current=>current+1)
+      setMove(0)//reinicia el valor de los elementos mostrados al llegar a 100
+    }
+
     //funcion para imprimir de 10 en 10 elementos
-     const weatherToShow = weather?.results?.slice(page, page + 10).map((results) => (
+     const weatherToShow = weather?.results?.slice(move, move + 10).map((results) => (
         <tr className="column">
         <td className="info">{results._id}</td>
         <td className="info">{results.cityid}</td>
@@ -31,8 +37,9 @@ function Elements() {
 ))
   
     return (
-      <>
+      <><TableContainer>
         <WeatherTable>
+          <thead>
           <tr>
             <th>_Id</th>
             <th>citiid</th>
@@ -43,33 +50,29 @@ function Elements() {
             <th>lastreporttimeformato(YYYY/MM/DD)</th>
             <th>LLUEVE</th>
           </tr>
+          </thead>
           {weatherToShow}
         </WeatherTable>
-  
-        <button onClick={() => setPage(page - 10)} disabled={page < 10}>
+        </TableContainer>
+        <button onClick={() => setMove(current=>current - 10)} >
           {" "}
           Previous{" "}
         </button>
-        <button onClick={() => setPage(page + 10)}>Next</button>
+        <button onClick={() => setMove(current=>current + 10)}>Next</button>
         {/* <form onSubmit={handleQuery}>
         <input type='text' onChange={(event)=>setQuery(event.target.value)}></input>
-        <button type='Submit'> Search </button>
-        </form> */}
+        <button type='Submit'> Search </button> */} 
+        {/* </form> */}
       </>
     );
   }
   const WeatherTable = styled.table`
-    width: 100%;
-    height: 500px;
-    border-collapse: collapse;
+     border-collapse: collapse;
     background-color: #89d2ff;
-    th {
+    
+    td, th {
       border: 2px solid;
-      padding: 8px;
-    }
-    td {
-      border: 2px solid;
-      padding: 8px;
+      padding: 5px 10px;
     }
     .column:nth-child(odd) {
       background-color: #fff;
@@ -78,4 +81,8 @@ function Elements() {
       background-color: #c1e3f7;
     }
   `;
+  const TableContainer = styled.div`
+  padding: 0 0 1em em;
+  
+`
 export default Elements
